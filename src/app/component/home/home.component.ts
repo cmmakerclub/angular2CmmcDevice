@@ -64,7 +64,9 @@ export class HomeComponent implements OnInit {
     this.stateCtrl = new FormControl();
     this.filteredStates = this.stateCtrl.valueChanges
       .startWith(null)
-      .map(deviceName => this.filterStates(deviceName));
+      .map(deviceName => {
+        return this.filterStates(deviceName);
+      });
 
     // Mqtt event
     mqtt.onConnect.subscribe((e) => console.log('onConnect', e));
@@ -72,7 +74,6 @@ export class HomeComponent implements OnInit {
     mqtt.onClose.subscribe(() => console.log('onClose'));
     mqtt.onReconnect.subscribe(() => console.log('onReconnect'));
     mqtt.onMessage.subscribe((e) => {
-      //console.log('onMessage', e)
       const retained = e.retain;
       const payload = e.payload.toString();
       // console.log(`retained = ${retained}`);
@@ -112,19 +113,20 @@ export class HomeComponent implements OnInit {
     this.mqtt.observables[filter] = null;
   }
 
-  // FilterStates call by btn key prefix vaule ex. 'MARU/#'
-  filterStates(deviceName: string) {
-    return deviceName ? this.arrayDeviceName.filter((dName) => {
-        if (dName !== undefined)
-          return dName.toString().toLowerCase().indexOf(deviceName.toLowerCase()) === 0;
-      })
-      : this.arrayDeviceName;
+  // FilterStates call by btn key prefix value ex. 'MARU/#'
+  filterStates(userInput: string) {
+    this.arrayDeviceName = this.arrayDeviceName || [];
+    userInput = `${userInput}`.toLocaleLowerCase();
+
+    return (this.arrayDeviceName)
+      .map(name => `${name}`.toLowerCase())
+      .filter(deviceName => deviceName.indexOf(userInput) >= 0);
   }
 
   ngOnInit() {
-    //this.getDeviceName(this.devices);
     this.subscribe(this.filter);
-    //console.log(`myOtherMessage: ${this.myOtherMessage$}`)
+    // this.getDeviceName(this.devices);
+    // console.log(`myOtherMessage: ${this.myOtherMessage$}`)
   }
 
   // Create array devices.d.myName

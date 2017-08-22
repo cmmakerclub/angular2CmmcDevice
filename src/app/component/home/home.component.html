@@ -72,18 +72,18 @@
     </app-card>
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="showJsonMsg">
     <div class="switch">
       <label>
         Off
-        <input type="checkbox" [(ngModel)]="showJsonMsg" >
+        <input type="checkbox" [(ngModel)]="showJsonMsg">
         <span class="lever"></span>
         On
       </label>
     </div>
-    <div *ngIf="showJsonMsg">
+    <div>
       <p>topic = {{ (observables[filter] | async)?.topic }}</p>
-      <textarea class="form-control" style="height: 200px" >Payload = {{ (observables[filter] | async)?.payload.toString() }}</textarea>
+      <textarea class="form-control" style="height: 200px">Payload = {{ (observables[filter] | async)?.payload.toString() }}</textarea>
     </div>
   </div>
 
