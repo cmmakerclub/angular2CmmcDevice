@@ -25,7 +25,6 @@ import { ConfigDataComponent } from './component/config-data/config-data.compone
 import { CardComponent } from './component/card/card.component';
 import { MoreDetailComponent } from './component/more-detail/more-detail.component';
 
-
 // Pipe filter
 import { DevicesFilter } from './shared/devices-filter';
 

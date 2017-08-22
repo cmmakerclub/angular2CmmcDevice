@@ -116,8 +116,7 @@ export class HomeComponent implements OnInit {
     this.arrayDeviceName = this.arrayDeviceName || [];
     userInput = `${userInput}`.toLowerCase();
 
-    return (this.arrayDeviceName)
-      .map(name => `${name}`.toLowerCase())
+    return (this.arrayDeviceName).map(name => `${name}`.toLowerCase())
       .filter(deviceName => deviceName.indexOf(userInput) >= 0);
   }
 
