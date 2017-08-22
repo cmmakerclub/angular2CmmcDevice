@@ -21,6 +21,8 @@ export type QoS = 0 | 1 | 2;
 export class HomeComponent implements OnInit {
   @ViewChild('searchValue') searchValue;
   @Output() clickOpenNav: EventEmitter<any> = new EventEmitter();
+
+  showJsonMsg: boolean = true;
   // Pagination
   // static PER_PAGE = 10;
 
@@ -70,6 +72,7 @@ export class HomeComponent implements OnInit {
     mqtt.onClose.subscribe(() => console.log('onClose'));
     mqtt.onReconnect.subscribe(() => console.log('onReconnect'));
     mqtt.onMessage.subscribe((e) => {
+      //console.log('onMessage', e)
       const retained = e.retain;
       const payload = e.payload.toString();
       // console.log(`retained = ${retained}`);
