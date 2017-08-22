@@ -6,22 +6,18 @@ import { AppConstants } from './AppConstants';
 })
 export class DevicesFilter implements PipeTransform {
 
-  transform(items: any[], filter: Object): object[] {
-    if (filter === AppConstants.FILTER_ALL) {
-      return items;
-    } else if (filter === AppConstants.FILTER_ONLINE) {
-      return items.filter((item) => {
-        return item.info.client_id !== undefined;
-      });
-    } else if (filter === AppConstants.FILTER_OFFLINE) {
-      return items.filter((item) => {
+  transform(items: any[], filterDeviceNameOrDeviceStatus: string): object[] {
+    items = items || [];
+    return items.filter((item) => {
+      if (filterDeviceNameOrDeviceStatus === AppConstants.FILTER_ALL) {
+        return true;
+      } else if (filterDeviceNameOrDeviceStatus === AppConstants.FILTER_ONLINE) {
+        return item.info.client_id;
+      } else if (filterDeviceNameOrDeviceStatus === AppConstants.FILTER_OFFLINE) {
         return item.info.client_id === undefined;
-      });
-    } else /* filter by device name */{
-      return items.filter((item) => {
-        return item.d.myName === filter;
-      });
-    }
+      } else {
+        return `${item.d.myName}`.toLowerCase() === filterDeviceNameOrDeviceStatus;
+      }
+    });
   }
-
 }

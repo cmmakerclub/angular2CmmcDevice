@@ -64,9 +64,7 @@ export class HomeComponent implements OnInit {
     this.stateCtrl = new FormControl();
     this.filteredStates = this.stateCtrl.valueChanges
       .startWith(null)
-      .map(deviceName => {
-        return this.filterStates(deviceName);
-      });
+      .map(deviceName => this.filterStates(deviceName));
 
     // Mqtt event
     mqtt.onConnect.subscribe((e) => console.log('onConnect', e));
@@ -116,7 +114,7 @@ export class HomeComponent implements OnInit {
   // FilterStates call by btn key prefix value ex. 'MARU/#'
   filterStates(userInput: string) {
     this.arrayDeviceName = this.arrayDeviceName || [];
-    userInput = `${userInput}`.toLocaleLowerCase();
+    userInput = `${userInput}`.toLowerCase();
 
     return (this.arrayDeviceName)
       .map(name => `${name}`.toLowerCase())
