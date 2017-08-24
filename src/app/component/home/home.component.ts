@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
   }
 
   get observables() {
+    console.log('observables',this.mqtt.observables[this.filter])
     return this.mqtt.observables;
   }
 
@@ -75,8 +76,9 @@ export class HomeComponent implements OnInit {
       const retained = e.retain;
       const payload = e.payload.toString();
       // console.log(`retained = ${retained}`);
-      const doAsync = () => {
-        return new Promise((resolve, reject) => {
+      // const doAsync = () => {
+      //   return new Promise((resolve, reject) => {
+        console.log('onMessage', e)
           if (e.topic.indexOf('/status') > 0) {
             try {
               const object = JSON.parse(payload);
@@ -86,17 +88,18 @@ export class HomeComponent implements OnInit {
               }
               this.devicesUnique[object.d.myName] = object;
               this.devices = Object.keys(this.devicesUnique).map((v, k) => this.devicesUnique[v]);
+              console.log('devices =', this.devices)
             } catch (exception) {
               console.error(exception);
             }
-            resolve(this.devices);
+            // resolve(this.devices);
           }
-        });
-      };
+      //   });
+      // };
 
-      doAsync().then((devices) => {
-        this.getDeviceName(devices);
-      });
+      // doAsync().then((devices) => {
+      //   this.getDeviceName(devices);
+      // });
 
     });
   }
