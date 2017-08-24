@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MqttServiceOptions, MqttService } from 'ngx-mqtt';
+var config = require('../config/config')
 
 @Component({
   selector: 'app-root',
@@ -7,19 +8,17 @@ import { MqttServiceOptions, MqttService } from 'ngx-mqtt';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  hostname: string = 'q.cmmc.io';
-  port: number = 59001;
-  path: string = '/mqtt';
+
   MQTT_SERVICE_OPTIONS: MqttServiceOptions = {
-    hostname: this.hostname,
-    port: this.port,
-    path: this.path
+    hostname: config.hostname,
+    port: config.port,
+    path: config.path
   };
 
   setConfig(config) {
     console.log(`set config`, config);
-    this.hostname = config.host;
-    this.port = config.port;
+    // this.hostname = config.host;
+    // this.port = config.port;
   }
 
 }

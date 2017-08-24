@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
+var config = require ('../../../config/config.ts');
 
 // ngx-mqtt
 import { MqttService, MqttMessage } from 'ngx-mqtt';
@@ -30,10 +31,10 @@ export class HomeComponent implements OnInit {
   devicesUnique: object = {};
 
   // Mqtt variable
-  topic: string = 'CMMC/plug001';
+  topic: string = config.topic;
   retain: boolean = true;
   qos: QoS = 0;
-  filter: string = 'MARU/#';
+  filter: string = config.filter;
   message: string;
 
   // myOtherMessage$: Observable<MqttMessage>;
